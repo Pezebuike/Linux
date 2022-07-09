@@ -1,0 +1,59 @@
+Linux server Patchig Procedure 
+
+1. Get the schdeule /down time from concern team or client 
+2. Raise the RFC or chnage request as per schedule
+3. collect the server pre- configuration details.
+
+Steps:- 
+
+1. get the outptut of below commands
+   uptime,hostname,uname-a
+
+2. /etc/grub/grub.conf(grub information)
+
+3. Mount infomation
+
+  df -h; cat /etc/fstab 
+
+4. Disk information with LVM
+
+   lsblk,blkid,vgdisplay,lvdisplay,fdisk,multipath -ll 
+
+5. Get the details of server what type of stuff running on this server.
+   ex. if the DB running , you need enagage the DB team and request to them to do pre-check from DB end.
+
+6. check the server backup or snapshot status it may be vm/physical backup.
+
+7. collect the network information
+
+  route information,ifconfig
+
+8. yum check-update
+
+9. check the whether server running in cluster or not [if running collect the cluster information with the respective team.
+    ex. VCS/PCS
+
+10. Check the console/ILO status[Mandatory]
+
+11. check with application/database team it require to exculde any package like kernel
+    since the application/database may not compatibility with the updated kernel.
+
+12. submit the change request.
+    It will goes to the CAB approval and concern team for approval [this may varies,since the process.]
+    once the change got scheduled we can execute a change as per the window time. 
+
+NOTE:- For Cluster server
+       1. Find out the service group on which server running.
+       2. Service running group should be freezed on other node and freeze the server.
+
+13. Apply patch
+    yum clean all;yum check update
+    yum update
+    reboot
+
+14. Post verification.
+
+  -check the kernel version.
+  -do server health check.
+  -verify the cluster app/DB
+  -Notify to the client or concern team and close the CR.
